@@ -16,9 +16,6 @@ def classify_weather(features):
 	prediction_index = model.predict(features)[0]
 	latency = round((time.time() - start) * 1000, 2) #we are here
 	
-	# Old:  prediction = weather_classes[1]
-	# Index 1 is cloudy always
-	# New: Uses the actual index predicte by the model
 	prediction = weather_classes[prediction_index]
 	
 	return prediction, latency
