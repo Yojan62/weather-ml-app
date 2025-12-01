@@ -22,34 +22,25 @@ jobs:
     - name: Install Dependencies
       run: pip install -r requirements.txt
 
-    # -------------------------------
     # (a) SMOKE TEST
-    # -------------------------------
     - name: Run Smoke Test
       run: python -m pytest tests/smoke_test.py -q
 
-    # -------------------------------
+
     # (b) UNIT TEST
-    # -------------------------------
     - name: Run Unit Test
       run: python -m pytest tests/unit_test.py -q
 
-    # -------------------------------
     # (c) INTEGRATION TEST
-    # -------------------------------
     - name: Run Integration Test
       run: python -m pytest tests/integration_test.py -q
 
-    # -------------------------------
     # (d) BUILD DOCKER IMAGE
-    # -------------------------------
     - name: Build Docker Image
       run: |
         docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/weather-ml-app:${{ github.sha }} .
 
-    # -------------------------------
     # (e) CONTAINER TEST + PUSH
-    # -------------------------------
     - name: Simple Container Test
       run: |
         container=$(docker run -d -p 5000:5000 ${{ secrets.DOCKERHUB_USERNAME }}/weather-ml-app:${{ github.sha }})
