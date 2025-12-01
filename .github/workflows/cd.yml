@@ -1,0 +1,30 @@
+name: CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: SSH to Production and Deploy
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.PROD_SSH_HOST }}
+        username: ${{ secrets.PROD_SSH_USER }}
+        key: ${{ secrets.PROD_SSH_KEY }}
+        script: |
+          echo "Starting rolling update on Kubernetes..."
+
+          kubectl set image deployment/weather-app weather-app=${{ secrets.DOCKERHUB_USERNAME }}/weather-ml-app:latest
+
+          echo "Waiting for rollout to complete..."
+          kubectl rollout status deployment/weather-app
+
+          echo "Deployment complete. Current pods:"
+          kubectl get pods -o wide
