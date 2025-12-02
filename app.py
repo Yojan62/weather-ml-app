@@ -5,7 +5,7 @@ import time
 
 app = Flask(__name__)
 
-weather_classes = ['clear', 'cloudy', 'drizzly', 'foggy', 'hazey', 'misty', 'rainy', 'smokey', 'thunderstorm']
+weather_classes = ['clear', 'cloudy', 'drizzly', 'foggy', 'hazey', 'misty', 'rain', 'smokey', 'thunderstorm']
 
 def load_model(model_path = 'model/model.pkl'):
 	return pickle.load(open(model_path, 'rb'))
@@ -17,7 +17,7 @@ def classify_weather(features):
 	latency = round((time.time() - start) * 1000, 2) #we are here
 	
 	prediction = weather_classes[prediction_index]
-	
+
 	return prediction, latency
 
 @app.route('/', methods=['GET', 'POST'])
