@@ -20,7 +20,6 @@ def classify_weather(features):
 	
 	return prediction, latency
 
-
 @app.route('/', methods=['GET', 'POST'])
 def home():
 	if request.method == 'POST':
@@ -41,10 +40,8 @@ def home():
 				wind_speed, wind_deg, rain_1h,
 				rain_3h, snow, clouds
 			]).reshape(1, -1)
-
-			
+		
 			prediction, latency = classify_weather(features)
-
 
 			return render_template('result.html', prediction=prediction, latency=latency)
 
@@ -53,7 +50,6 @@ def home():
 			return render_template('form.html', error=error_msg)
 	# GET method: show the input form
 	return render_template('form.html')
-
 
 if __name__ == '__main__':
 	app.run(host="0.0.0.0", port=5000)
