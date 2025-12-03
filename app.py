@@ -4,6 +4,7 @@ import numpy as np
 import time
 
 app = Flask(__name__)
+version = "v1"
 
 weather_classes = ['clear', 'cloudy', 'drizzly', 'foggy', 'hazey', 'misty', 'rain', 'smokey', 'thunderstorm']
 
